@@ -1,37 +1,39 @@
 package com.student.redis.cofiguration;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
+@EnableCaching
 public class RedisConfiguration {
 
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
     	
-    	try {
-    	
-            RedisStandaloneConfiguration redisStandaloneConfiguration = 
-            		new RedisStandaloneConfiguration("10.255.127.195", 6379);
+    	RedisStandaloneConfiguration redisStandaloneConfiguration = 
+            		new RedisStandaloneConfiguration("10.29.247.147", 6379);
             
             return new JedisConnectionFactory(redisStandaloneConfiguration);
-    	}
-    	catch(Exception e) {
-    		e.printStackTrace();
-    	}
-    	
-    	return null;
         
     }
 
     @Bean
-    public RedisTemplate redisTemplate() {
-        RedisTemplate template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new JdkSerializationRedisSerializer());
+        template.setValueSerializer(new JdkSerializationRedisSerializer());
+        template.setEnableTransactionSupport(true);
+        template.afterPropertiesSet();
         return template;
     }
 }

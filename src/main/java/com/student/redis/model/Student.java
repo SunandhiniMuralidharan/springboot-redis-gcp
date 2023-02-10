@@ -2,12 +2,9 @@ package com.student.redis.model;
 
 import java.io.Serializable;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import lombok.Data;
 
-import jakarta.annotation.Generated;
-
-@RedisHash("student")
+@Data
 public class Student implements Serializable {
 
 	private String studentId;
