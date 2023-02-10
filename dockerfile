@@ -10,4 +10,4 @@ FROM adoptopenjdk/openjdk17:latest
 
 COPY --from=builder /app/target/redis-*.jar /redis.jar
 
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom","-Dserver.port=8093","-jar","/redis.jar"]
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom","-Dserver.port=8081","-jar","/redis.jar"]
