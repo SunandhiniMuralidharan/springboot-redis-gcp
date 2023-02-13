@@ -14,7 +14,7 @@
 	<name>redis</name>
 	<description>Demo project for Spring Boot with Cloud Memory Store Redis Instance</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 

@@ -20,7 +20,12 @@ public class RedisConfiguration {
     	RedisStandaloneConfiguration redisStandaloneConfiguration = 
             		new RedisStandaloneConfiguration("10.29.247.147", 6379);
             
-            return new JedisConnectionFactory(redisStandaloneConfiguration);
+            JedisConnectionFactory jedis = new JedisConnectionFactory(redisStandaloneConfiguration);
+            jedis.getPoolConfig().setMaxIdle(30);
+            jedis.getPoolConfig().setMinIdle(10);
+            //jedis.setTimeout(2000);
+            
+            return jedis;
         
     }
 
