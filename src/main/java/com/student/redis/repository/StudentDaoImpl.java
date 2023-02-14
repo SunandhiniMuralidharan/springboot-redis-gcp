@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.student.redis.model.Student;
 
 @Repository
+@Transactional
 public class StudentDaoImpl implements StudentDao {
 
 	@Autowired

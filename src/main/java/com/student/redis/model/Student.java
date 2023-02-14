@@ -2,11 +2,21 @@ package com.student.redis.model;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Persistent;
+import org.springframework.data.redis.core.RedisHash;
+
 import lombok.Data;
 
 @Data
+@RedisHash
+@Persistent
 public class Student implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String studentId;
 	private String name;
 	private String grade;

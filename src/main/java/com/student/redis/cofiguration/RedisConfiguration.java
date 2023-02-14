@@ -1,29 +1,44 @@
 package com.student.redis.cofiguration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@EnableCaching
+@EnableRedisRepositories
 public class RedisConfiguration {
 
+    @Value("${spring.redis.host}")
+    private String REDIS_HOST;
+
+    @Value("${spring.redis.port}")
+    private int REDIS_PORT;
+
+    @Value("${spring.redis.database}")
+    private int REDIS_DATABASE;
+    
+    @Value("${spring.redis.timeout}")
+    private int REDIS_TIMEOUT;
+    
     @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
+    public JedisConnectionFactory jedisConnectionFactory() {
     	
     	RedisStandaloneConfiguration redisStandaloneConfiguration = 
-            		new RedisStandaloneConfiguration("10.29.247.147", 6379);
+            		new RedisStandaloneConfiguration(REDIS_HOST, REDIS_PORT);
+    	
+    	redisStandaloneConfiguration.setDatabase(REDIS_DATABASE);
             
             JedisConnectionFactory jedis = new JedisConnectionFactory(redisStandaloneConfiguration);
             jedis.getPoolConfig().setMaxIdle(30);
             jedis.getPoolConfig().setMinIdle(10);
-            //jedis.setTimeout(2000);
+            jedis.setTimeout(REDIS_TIMEOUT);
             
             return jedis;
         
@@ -41,4 +56,6 @@ public class RedisConfiguration {
         template.afterPropertiesSet();
         return template;
     }
+    
+
 }
