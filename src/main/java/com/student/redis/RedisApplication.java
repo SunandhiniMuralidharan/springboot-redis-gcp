@@ -7,6 +7,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @SpringBootApplication
 @EnableCaching
+@EnableRedisRepositories
 public class RedisApplication {
 
 	public static void main(String[] args) {

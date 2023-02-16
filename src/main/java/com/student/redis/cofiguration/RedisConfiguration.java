@@ -12,7 +12,6 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@EnableRedisRepositories
 public class RedisConfiguration {
 
     @Value("${spring.redis.host}")
@@ -36,8 +35,7 @@ public class RedisConfiguration {
     	redisStandaloneConfiguration.setDatabase(REDIS_DATABASE);
             
             JedisConnectionFactory jedis = new JedisConnectionFactory(redisStandaloneConfiguration);
-            jedis.getPoolConfig().setMaxIdle(30);
-            jedis.getPoolConfig().setMinIdle(10);
+            jedis.setUsePool(false);
             jedis.setTimeout(REDIS_TIMEOUT);
             
             return jedis;
